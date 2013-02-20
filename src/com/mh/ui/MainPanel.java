@@ -28,15 +28,15 @@ public class MainPanel extends JPanel{
 	public MainPanel(Main parent,JPanel header,JPanel content,JPanel footer) {
 		this.parent=parent;
 		setLayout(new BorderLayout(5,5));	
-		this.header = new JPanel();
-		add(header,BorderLayout.NORTH);
+		//this.header = new JPanel();
+		//add(header,BorderLayout.NORTH);
 		
 		
 		this.content = new JPanel();
 		add(content,BorderLayout.CENTER);
 		
-		this.footer = new JPanel();
-		add(footer,BorderLayout.SOUTH);
+		//this.footer = new JPanel();
+		//add(footer,BorderLayout.SOUTH);
 	}
 	public JPanel getHeader() {
 		return header;
