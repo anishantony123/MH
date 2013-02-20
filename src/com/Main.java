@@ -280,6 +280,7 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] a){
+		System.out.println("Starting main");
 		ImageUtil.init();
 		loadProperties();
 		cleanDir(HMConstants.tempDirectoryPath);
