@@ -25,7 +25,7 @@ import com.mh.ui.validation.Validator;
 import com.mh.ui.validation.annotations.Required;
 import com.mh.ui.validation.event.ValidationEvent;
 import com.mh.ui.validation.listener.ValidationListener;
-import com.toedter.calendar.JDateChooser;
+//import com.toedter.calendar.JDateChooser;
 
 public class UserView extends JPanel{
 	private User user=null;
@@ -35,7 +35,7 @@ public class UserView extends JPanel{
 	@Required(message="Reg No. can't be empty",target="regNo")
 	protected JTextField regNo;
 	protected JComboBox<Integer> age;
-	protected JDateChooser dob;
+	//protected JDateChooser dob;
 	protected JTextField diagonosis;
 	protected JTextField center;
 	protected JTextField careOff;

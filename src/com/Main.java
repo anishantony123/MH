@@ -42,7 +42,7 @@ public class Main extends JFrame {
 	public static final String PATIENTS_IMG = "patientsImg";
 	JPanel panel_1;
 	MainPanel mainPanel;
-	JPanel header;
+	//JPanel header;
 	JPanel content;
 	JPanel footer;
 	JSplitPane splitPane;
@@ -67,7 +67,7 @@ public class Main extends JFrame {
 		 getContentPane().add(login);
 		 login.setVisible(false);
 		mainPanel = new MainPanel(this);
-		header = new JPanel();		
+		//header = new JPanel();		
 			
 		
 		loginButton = new JButton(ImageUtil.getIcon(HMConstants.LOGIN_IMG));
@@ -75,19 +75,13 @@ public class Main extends JFrame {
 		loginButton.setContentAreaFilled(false);
 		loginButton.setBorderPainted( false );
 		
-		//header.setSize(800, 400);
-		header.setMinimumSize(new Dimension(800, 60));
+		/*header.setMinimumSize(new Dimension(800, 60));
 		header.setPreferredSize(new Dimension(800, 60));
 		header.setMaximumSize(new Dimension(800, 60));
 		ImagePanel panel = new ImagePanel(ImageUtil.getIcon(HMConstants.HEADER).getImage());
-		header.add(panel);
+		header.add(panel);*/
 		
-		/*header.setMaximumSize(new Dimension(Short.MAX_VALUE,200));
-		header.add(Box.createRigidArea(new Dimension((int) (header.getPreferredSize().getWidth()-100),20)));
-		header.add(Box.createHorizontalGlue());
 		
-		header.add(loginButton);	
-		*/
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if( arg0.getActionCommand().equals("Login")){					
@@ -100,7 +94,7 @@ public class Main extends JFrame {
 		});
 		//header.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), header.getBorder()));
 		
-		mainPanel.setHeader(header);
+		//mainPanel.setHeader(header);
 		
 		content =new JPanel();
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -191,7 +185,7 @@ public class Main extends JFrame {
 		
 		
 		mainPanel.setVisible(true);
-		mainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), header.getBorder()));
+		//mainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), header.getBorder()));
 		//getContentPane().setBackground(Color.RED);
 		//getContentPane().setLayout(new GridLayout(1,3));
 		getContentPane().add(mainPanel);
@@ -223,13 +217,13 @@ public class Main extends JFrame {
 		this.mainPanel = mainPanel;
 	}
 
-	public JPanel getHeader() {
+	/*public JPanel getHeader() {
 		return header;
 	}
 
 	public void setHeader(JPanel header) {
 		this.header = header;
-	}
+	}*/
 
 	public JPanel getContent() {
 		return content;
@@ -280,6 +274,7 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] a){
+		System.out.println("Starting main");
 		ImageUtil.init();
 		loadProperties();
 		cleanDir(HMConstants.tempDirectoryPath);
@@ -299,11 +294,9 @@ public class Main extends JFrame {
  		int midHeight = (int)(dim.getHeight()/2)-300;
  		int midWidth = (int)(dim.getWidth()/2)-400;
  		//main.setSize(800,600);
- 		main.setLayout(new BorderLayout());
+ 		main.setLayout(null);
  		
- 		main.setMinimumSize(new Dimension(800,400));
- 		main.setPreferredSize(new Dimension(800,400));
- 		main.setMaximumSize(new Dimension(800,400));
+ 		main.setSize(new Dimension(900,630));
  		
  		main.setLocation(midWidth, midHeight);
  		main.setResizable(false);
