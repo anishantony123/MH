@@ -34,7 +34,7 @@ public class UserView extends JPanel{
 	protected JTextField name;
 	@Required(message="Reg No. can't be empty",target="regNo")
 	protected JTextField regNo;
-	protected JComboBox<Integer> age;
+	protected JComboBox age;
 	//protected JDateChooser dob;
 	protected JTextField diagonosis;
 	protected JTextField center;
@@ -141,7 +141,7 @@ public class UserView extends JPanel{
 		gbc_age.gridy = 4;
 		add(dob, gbc_age);*/
 		
-		age = new JComboBox<Integer>();
+		age = new JComboBox();
 		age.setFont(new Font("Arial",Font.BOLD,13));
 		for(int i=1;i<=100;i++){
 			age.addItem(new Integer(i));
