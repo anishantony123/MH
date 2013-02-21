@@ -28,9 +28,11 @@ import javax.swing.JSplitPane;
 import org.apache.commons.io.FileDeleteStrategy;
 
 import com.mh.model.HMConstants;
+import com.mh.ui.AdvancedPanel;
 import com.mh.ui.Login;
 import com.mh.ui.MainPanel;
 import com.mh.ui.SettingsPanel;
+import com.mh.ui.SettingsTabbedPane;
 import com.mh.ui.UsersPanel;
 import com.mh.ui.images.ImageUtil;
 import com.mh.ui.session.Session;
@@ -39,7 +41,6 @@ import com.mh.ui.validation.ValidationPane;
 
 public class Main extends JFrame {
 	
-	public static final String PATIENTS_IMG = "patientsImg";
 	JPanel panel_1;
 	MainPanel mainPanel;
 	JPanel header;
@@ -55,7 +56,9 @@ public class Main extends JFrame {
 	JDesktopPane desktop;
 	JButton btnSettings;
 	JButton btnUsers;
+	SettingsTabbedPane settings;
 	SettingsPanel settingsPanel;
+	AdvancedPanel advancedPanel;
 	
 	
 	public static Session session=new Session();
@@ -148,6 +151,11 @@ public class Main extends JFrame {
 		});
 		buttonPanel.add(btnUsers);
 		
+		
+		//settings
+		
+		settings = new SettingsTabbedPane();
+		
 		settingsPanel= new SettingsPanel(this);
 		
 		settingsPanel.setMinimumSize(new Dimension(600, 450));
@@ -165,13 +173,25 @@ public class Main extends JFrame {
 				//btnUsers.setEnabled(true);
 				//btnSettings.setEnabled(false);
 				settingsPanel.init();
-				splitPane.setRightComponent(settingsPanel);
+				splitPane.setRightComponent(settings);
 				settingsPanel.addClientValidationListener(validationPane);
 				
 			}
 		});
-		buttonPanel.add(btnSettings);
 		
+		advancedPanel = new AdvancedPanel(this);
+		advancedPanel.setMinimumSize(new Dimension(600, 450));
+		advancedPanel.setPreferredSize(new Dimension(650, 450));
+		advancedPanel.setMaximumSize(new Dimension(Short.MAX_VALUE,Short.MAX_VALUE));
+		
+		advancedPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50), contentPanel.getBorder()));
+	
+		
+		settings.add("General",settingsPanel);
+		settings.add("Advanced",advancedPanel);
+		
+		
+		buttonPanel.add(btnSettings);
 		
 		
 		content.setMinimumSize(new Dimension(800, 500));
