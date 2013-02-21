@@ -100,9 +100,9 @@ public class AdvancedPanel extends JPanel{
 					} catch (OnSuccess e) {
 						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
 					} catch (OnFailure e) {
-						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 					} catch (Throwable e) {
-						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}
@@ -152,9 +152,9 @@ public class AdvancedPanel extends JPanel{
 					} catch (OnSuccess e) {
 						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
 					} catch (OnFailure e) {
-						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 					} catch (Throwable e) {
-						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}
