@@ -101,7 +101,7 @@ public class AddUserPanel extends UserView{
 				int option = chooser.showSaveDialog(AddUserPanel.this.main);
 				if (option == JFileChooser.APPROVE_OPTION) {
 					result = chooser.getSelectedFiles();
-					setCurrentDirectory(chooser.getCurrentDirectory().toPath().toString());
+					setCurrentDirectory(chooser.getCurrentDirectory().getAbsolutePath().toString());
 				} else {
 					
 					
