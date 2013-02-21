@@ -13,12 +13,15 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.Main;
 import com.mh.model.HMConstants;
 import com.mh.service.BackupService;
+import com.mh.ui.exception.OnFailure;
+import com.mh.ui.exception.OnSuccess;
 import com.mh.ui.util.Utils;
 import com.mh.ui.validation.ValidationMsg;
 import com.mh.ui.validation.Validator;
@@ -91,8 +94,17 @@ public class AdvancedPanel extends JPanel{
 		backup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!validateThis("backupFile")){
-					new BackupService().backupDB(Utils.getConfigValue("DBName"), 
-							Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), backupPath);
+					try {
+						new BackupService().backupDB(Utils.getConfigValue("DBName"), 
+								Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), backupPath);
+					} catch (OnSuccess e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+					} catch (OnFailure e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+					} catch (Throwable e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -134,8 +146,17 @@ public class AdvancedPanel extends JPanel{
 		restore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!validateThis("restoreFile")){
-					new BackupService().dropAndRestoreDB(Utils.getConfigValue("DBName"), 
-							Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), restorePath);
+					try {
+						new BackupService().dropAndRestoreDB(Utils.getConfigValue("DBName"), 
+								Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), restorePath);
+					} catch (OnSuccess e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+					} catch (OnFailure e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+					} catch (Throwable e) {
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
+						e.printStackTrace();
+					}
 				}
 			}
 			

@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -75,9 +76,12 @@ public class LoginPanel extends JPanel{
 					usersPanel.setTable(HMConstants.EDIT);
 					usersPanel.getAddNewButton().setVisible(true);
 					usersPanel.setMode(HMConstants.EDIT);
+					getMain().getMainPanel().setVisible(true);
+					getMain().getLogin().setVisible(false);
+				}else{
+					JOptionPane.showMessageDialog(LoginPanel.this,"Login failed !");
 				}
-				getMain().getMainPanel().setVisible(true);
-				getMain().getLogin().setVisible(false);
+				
 			}
 		});
 		

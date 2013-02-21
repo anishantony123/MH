@@ -139,6 +139,7 @@ public class Main extends JFrame {
 		btnUsers = new JButton(ImageUtil.getIcon(HMConstants.PATIENTS_IMG));
 		btnUsers.setContentAreaFilled(false);
 		btnUsers.setBorderPainted( false );
+		btnUsers.setEnabled(false);
 		//btnUsers = new JButton("Patients");
 		
 		//btnUsers.setEnabled(false);

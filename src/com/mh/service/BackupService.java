@@ -1,75 +1,55 @@
 package com.mh.service;
 
+import com.mh.ui.exception.OnFailure;
+import com.mh.ui.exception.OnSuccess;
+
 public class BackupService {
 
-	public boolean backupDB(String dbName, String dbUserName, String dbPassword, String path) {
+	public void backupDB(String dbName, String dbUserName, String dbPassword, String path) throws Throwable {
 
         String executeCmd = "mysqldump -u " + dbUserName + " -p" + dbPassword + " --add-drop-database -B " + dbName + " -r " + path;
         Process runtimeProcess;
-        try {
-
+       
             runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
 
             if (processComplete == 0) {
-                System.out.println("Backup created successfully");
-                return true;
+            	 throw new OnSuccess("Backup created successfully !");
             } else {
-                System.out.println("Could not create the backup");
+            	 throw new OnFailure("Backup failed !");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+       
 
-        return false;
     }
-	public boolean restoreDB(String dbUserName, String dbPassword, String source) {
+	public void restoreDB(String dbUserName, String dbPassword, String source) throws Throwable {
 
         String[] executeCmd = new String[]{"mysql", "--user=" + dbUserName, "--password=" + dbPassword, "-e", "source "+source};
 
         Process runtimeProcess;
-        try {
 
             runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
 
             if (processComplete == 0) {
-                System.out.println("Backup restored successfully");
-                return true;
+                throw new OnSuccess("Backup restored successfully !");
             } else {
-                System.out.println("Could not restore the backup");
+            	throw new OnFailure("Restore Failed !");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
     }
-	public boolean dropAndRestoreDB(String dbName, String dbUserName, String dbPassword, String source) {
+	public void dropAndRestoreDB(String dbName, String dbUserName, String dbPassword, String source) throws Throwable {
 
         String[] executeCmd = new String[]{"mysql", "--user=" + dbUserName, "--password=" + dbPassword, dbName,"-e", "source "+source};
 
         Process runtimeProcess;
-        try {
-
             runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
 
             if (processComplete == 0) {
-                System.out.println("Backup restored successfully");
-                return true;
+                throw new OnSuccess("Backup restored successfully !");
             } else {
-                System.out.println("Could not restore the backup");
+            	throw new OnFailure("Restore Failed !");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
+       
     }
-	public static void main(String a[]){
-		BackupService backup = new BackupService();
-		//backup.backupDB("hospital", "root", "root", "E:\\temp1\\backup");
-		backup.dropAndRestoreDB("hospital", "root", "root", "E:\\temp1\\backup");
-	}
+	
 }
