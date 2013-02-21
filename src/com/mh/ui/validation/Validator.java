@@ -1,6 +1,7 @@
 package com.mh.ui.validation;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -65,21 +66,8 @@ public class Validator {
     	boolean hasErrors = false;
         Field[] fields = obj.getClass().getDeclaredFields();
         for( int i = 0; i < fields.length; i++ ){
-            Required annotations = (Required)fields[i].getAnnotation(Required.class);
-            if(annotations != null ){
-                try{
-                	fields[i].setAccessible(true);
-                    if(fields[i].get(obj) != null){
-                    	JTextComponent t= (JTextComponent) fields[i].get(obj);
-                    	Field targetField = obj.getClass().getDeclaredField(annotations.target());
-                		targetField.setAccessible(true);
-                		JComponent target = (JComponent) targetField.get(obj);
-                		hasErrors = validateRequired(hasErrors,resultList,annotations,t, target);
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
+        	Field currentField = fields[i];
+			hasErrors = assessField(obj, resultList, currentField );          
         }
         return hasErrors;
     }
@@ -159,5 +147,37 @@ public class Validator {
         }
         return hasErrors;
     }
+    
+   public static boolean validateWithFilter(Object obj, List<ValidationMsg> resultList,List<String> filterFields){
+    	boolean hasErrors = false;
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for( int i = 0; i < fields.length; i++ ){
+        	Field currentField = fields[i];
+        	if(filterFields.contains(currentField.getName())){
+	            hasErrors = assessField(obj, resultList, currentField);
+        	}
+        }
+        return hasErrors;
+    }
+	public static boolean assessField(Object obj,
+			List<ValidationMsg> resultList, Field currentField) {
+		boolean hasErrors = false;
+		Required annotations = (Required)currentField.getAnnotation(Required.class);
+		if(annotations != null ){
+		    try{
+		    	currentField.setAccessible(true);
+		        if(currentField.get(obj) != null){
+		        	JTextComponent t= (JTextComponent) currentField.get(obj);
+		        	Field targetField = obj.getClass().getDeclaredField(annotations.target());
+		    		targetField.setAccessible(true);
+		    		JComponent target = (JComponent) targetField.get(obj);
+		    		hasErrors = validateRequired(hasErrors,resultList,annotations,t, target);
+		        }
+		    }catch(Exception e){
+		        e.printStackTrace();
+		    }
+		}
+		return hasErrors;
+	}
 
 }

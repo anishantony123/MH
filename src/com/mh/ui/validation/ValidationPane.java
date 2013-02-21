@@ -38,8 +38,8 @@ public class ValidationPane extends  JComponent implements ClientValidationListe
 		if(vEvent!=null){
 			Graphics2D  g2d = (Graphics2D) g; 
 			if(!vEvent.isValid()){ 	          
-	           int tx =vEvent.getParent().getX()+main.getContent().getX()+30;
-	           int ty =vEvent.getParent().getY()+main.getContent().getY()-10;
+	           int tx =vEvent.getParent().getX()+main.getContent().getX()+30+vEvent.getDx();
+	           int ty =vEvent.getParent().getY()+main.getContent().getY()-10+vEvent.getDy();
 	        	for(ValidationMsg valid:vEvent.getResultList()){
 	        		int length = valid.getMsg().length()*(int)(getFont().getSize2D()/1.7);
 	        		int height = (int) (1.4*getFont().getSize());

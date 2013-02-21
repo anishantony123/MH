@@ -245,7 +245,8 @@ public class SettingsPanel extends JPanel{
 				ValidationEvent vEvent =  new ValidationEvent(); 
 				vEvent.setValid(!hasErrors);
 				vEvent.setResultList(resultList);
-				vEvent.setParent(this);
+				vEvent.setParent(this.main.settings);
+				vEvent.setDy(20);
 				if(hasErrors){
 					listener.onFailure(vEvent);
 				}else{
@@ -263,6 +264,7 @@ public class SettingsPanel extends JPanel{
 					ValidationEvent vEvent =  new ValidationEvent(); 
 					vEvent.setValid(!hasErrors);
 					vEvent.setResultList(resultList);
+					vEvent.setDy(20);
 					vEvent.setParent(this);
 					if(hasErrors){
 						listener.onFailure(vEvent);

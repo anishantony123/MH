@@ -56,7 +56,7 @@ public class Main extends JFrame {
 	JDesktopPane desktop;
 	JButton btnSettings;
 	JButton btnUsers;
-	SettingsTabbedPane settings;
+	public SettingsTabbedPane settings;
 	SettingsPanel settingsPanel;
 	AdvancedPanel advancedPanel;
 	
@@ -163,21 +163,6 @@ public class Main extends JFrame {
 		settingsPanel.setMaximumSize(new Dimension(Short.MAX_VALUE,Short.MAX_VALUE));
 		
 		settingsPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50), contentPanel.getBorder()));
-		btnSettings = new JButton(ImageUtil.getIcon(HMConstants.SETTINGS_IMG));
-		btnSettings.setContentAreaFilled(false);
-		btnSettings.setBorderPainted( false );
-		//btnSettings = new JButton("Settings");
-		btnSettings.setVisible(false);
-		btnSettings.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//btnUsers.setEnabled(true);
-				//btnSettings.setEnabled(false);
-				settingsPanel.init();
-				splitPane.setRightComponent(settings);
-				settingsPanel.addClientValidationListener(validationPane);
-				
-			}
-		});
 		
 		advancedPanel = new AdvancedPanel(this);
 		advancedPanel.setMinimumSize(new Dimension(600, 450));
@@ -190,6 +175,22 @@ public class Main extends JFrame {
 		settings.add("General",settingsPanel);
 		settings.add("Advanced",advancedPanel);
 		
+		btnSettings = new JButton(ImageUtil.getIcon(HMConstants.SETTINGS_IMG));
+		btnSettings.setContentAreaFilled(false);
+		btnSettings.setBorderPainted( false );
+		//btnSettings = new JButton("Settings");
+		btnSettings.setVisible(false);
+		btnSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//btnUsers.setEnabled(true);
+				//btnSettings.setEnabled(false);
+				settingsPanel.init();
+				splitPane.setRightComponent(settings);
+				settingsPanel.addClientValidationListener(validationPane);
+				advancedPanel.addClientValidationListener(validationPane);
+				
+			}
+		});
 		
 		buttonPanel.add(btnSettings);
 		
