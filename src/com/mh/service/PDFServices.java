@@ -53,7 +53,7 @@ public class PDFServices {
 			if(width>(a4Width-20)){
 				BufferedImage resizeImageJpg = Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH,
 			               a4Width-20, Scalr.OP_ANTIALIAS);
-				String newPath = tempDirectoryPath+"\\HM_"+totelNoOfFiles+".jpg";
+				String newPath = tempDirectoryPath+File.separator+"HM_"+totelNoOfFiles+".jpg";
 				ImageIO.write(resizeImageJpg, "jpg", new File(newPath));
 				imagePath = newPath;
 			}
@@ -108,7 +108,7 @@ public class PDFServices {
 		return new Dimension(new_width, new_height);
 	}
 	public String imageConvertToPdf(String imagePath, String tempDirectoryPath, int totelNoOfFiles){
-		String newPath = tempDirectoryPath+"\\HM_"+totelNoOfFiles+".pdf";
+		String newPath = tempDirectoryPath+File.separator+"HM_"+totelNoOfFiles+".pdf";
         try {
         	
             OutputStream file = new FileOutputStream(newPath);
@@ -142,11 +142,11 @@ public class PDFServices {
 	            
 	            for(int i=0;i<tempPathFiles.list().length;i++)
 	            {
-	            	fin =new FileInputStream(tempPath+"\\_"+(i+1)+".pdf");
+	            	fin =new FileInputStream(tempPath+File.separator+"_"+(i+1)+".pdf");
 	            	pdfs.add(fin);
 	            	
 	            }
-	            outPath = tempPath+"\\resultPdf.pdf";
+	            outPath = tempPath+File.separator+"resultPdf.pdf";
 	            output = new FileOutputStream(outPath);
 	            concatPDFs(pdfs, output, true);
 	            
