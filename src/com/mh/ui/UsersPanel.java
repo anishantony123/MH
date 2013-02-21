@@ -40,11 +40,13 @@ import com.mh.model.HMConstants;
 import com.mh.model.User;
 import com.mh.service.UserService;
 import com.mh.ui.images.ImageUtil;
+import com.mh.ui.util.Utils;
 
 public class UsersPanel extends JPanel{
 	private JButton addNewButton;
 	private JButton nextButton;
 	private JButton previousButton;
+	private JButton refreshButton;
 	private JLabel searchResult;
 	private JTextField searchText;
 	private JTable table;
@@ -60,9 +62,9 @@ public class UsersPanel extends JPanel{
 		try {
 		this.main=main;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{10, 125, 83, 0, 0, 10};
+		gridBagLayout.columnWidths = new int[]{10, 100, 40, 40 , 20,20, 20, 0, 10};
 		gridBagLayout.rowHeights = new int[]{0, 0, 39,30,94,0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.5,0.5,0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -101,13 +103,15 @@ public class UsersPanel extends JPanel{
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted( false );
 		btnSearch.setToolTipText("<html>Click to search.</html>");
+		btnSearch.setMinimumSize(new Dimension(100, 40));
+		btnSearch.setPreferredSize(new Dimension(110, 40));
+		btnSearch.setMaximumSize(new Dimension(110,Short.MAX_VALUE));
 		//btnSearch.setToolTipText("Search");
-		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_btnSearch = new GridBagConstraints();
-		gbc_btnSearch.anchor = GridBagConstraints.WEST;
 		gbc_btnSearch.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSearch.gridx = 2;
 		gbc_btnSearch.gridy = 2;
+		gbc_btnSearch.anchor = GridBagConstraints.WEST;
 		add(btnSearch, gbc_btnSearch);
 		
 		btnSearch.addActionListener(new ActionListener() {
@@ -126,16 +130,33 @@ public class UsersPanel extends JPanel{
 				
 			}
 		});
+		refreshButton = new JButton(ImageUtil.getIcon(HMConstants.REFRESH_ICON));
+		refreshButton.setContentAreaFilled(false);
+		refreshButton.setBorderPainted( false );
+		refreshButton.setMinimumSize(new Dimension(30, 30));
+		refreshButton.setPreferredSize(new Dimension(40, 40));
+		refreshButton.setMaximumSize(new Dimension(50,Short.MAX_VALUE));
+		refreshButton.setToolTipText("<html>Click to reset.</html>");
+		GridBagConstraints gbc_btnRefresh = Utils.getConStraints(3, 2, null);
+		gbc_btnRefresh.anchor = GridBagConstraints.WEST;
+		add(refreshButton, gbc_btnRefresh);
+		
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clearSearch();
+			}
+		});
+		
 		
 		GridBagConstraints gbc_addNewButton = new GridBagConstraints();
 		gbc_addNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_addNewButton.gridx = 3;
+		gbc_addNewButton.gridx = 5;
 		gbc_addNewButton.gridy = 2;
 		add(addNewButton, gbc_addNewButton);
 		
 		GridBagConstraints gbc_loginNewButton = new GridBagConstraints();
 		gbc_loginNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_loginNewButton.gridx = 3;
+		gbc_loginNewButton.gridx = 5;
 		gbc_loginNewButton.gridy = 0;
 		
 		add(main.getLoginButton(), gbc_loginNewButton);
@@ -183,7 +204,7 @@ public class UsersPanel extends JPanel{
 	//search result  end	
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 7;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;

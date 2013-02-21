@@ -41,6 +41,7 @@ public class HMConstants {
 	public static final String VIEW_ICON = "viewIcon";
 	public static final String HEADER = "header";
 	public static final String DELETE_ICON = "deleteIcon";
+	public static final String REFRESH_ICON = "refreshIcon";
 
 	public static final String BACKUP_DIR = "backupChooserDir";
 	public static final String RESTORE_DIR = "restoreChooserDir";
