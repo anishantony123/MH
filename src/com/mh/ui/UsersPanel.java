@@ -14,11 +14,19 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -33,7 +41,9 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import com.Main;
 import com.mh.model.HMConstants;
@@ -57,6 +67,7 @@ public class UsersPanel extends JPanel{
 	private Rectangle r;
 	private int lastIndex = 0;
 	private List<TableIndex> searchIndexList = new ArrayList<UsersPanel.TableIndex>();
+	private Set<Integer> searchSelColset = new HashSet<Integer>();
 	String mode=HMConstants.VIEW;
 		public UsersPanel(Main main) {
 		try {
@@ -239,8 +250,11 @@ public class UsersPanel extends JPanel{
 		
 		table.setModel(dm);
 		table.setFont(new Font("Arial",Font.PLAIN,12));
-		table.getTableHeader().setFont(new Font("Time New Roman",Font.BOLD,15));
-		table.getTableHeader().setBackground(new Color(143,188,255));
+		table.getTableHeader().setFont(new Font("Time New Roman",Font.BOLD,12));
+		table.getTableHeader().setBackground(new Color(143,188,255));		
+		table.getTableHeader().setDefaultRenderer(new CheckBoxHeader());
+		table.getTableHeader().setReorderingAllowed(false);
+		//table.getTableHeader().setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), table.getBorder()));
 		
 		dm.addColumn("Edit");
 		dm.addColumn("RegNo");
@@ -336,48 +350,6 @@ public class UsersPanel extends JPanel{
 
 		  public Component getTableCellRendererComponent(JTable table, Object value,
 		      boolean isSelected, boolean hasFocus, int row, int column) {
-			/*  setValue(value);
-			       setOpaque(true);
-			       if (table == null)
-			         return this;
-			   
-			       if (isSelected)
-			         {
-			           super.setBackground(table.getSelectionBackground());
-			           super.setForeground(table.getSelectionForeground());
-			         }
-			       else
-			         {
-			           if (getBackground() != null)
-			             super.setBackground(getBackground());
-			           else
-			             super.setBackground(table.getBackground());
-			           if (getForeground() != null)
-			             super.setForeground(getForeground());
-			           else
-			             super.setForeground(table.getForeground());
-			         }
-			   
-			       Border b = null;
-			      if (hasFocus)
-			         {
-			           if (isSelected)
-			             b = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
-			           if (b == null)
-			             b = UIManager.getBorder("Table.focusCellHighlightBorder");
-			        }
-			       else
-			    	   b = noFocusBorder;
-			       setBorder(b);
-			   
-			       setFont(table.getFont());
-			   
-			       // If the current background is equal to the table's background, then we
-			       // can avoid filling the background by setting the renderer opaque.
-			       Color back = getBackground();
-			       setOpaque(back != null && back.equals(table.getBackground()));
-			       
-			       return this;  */  
 			  isSelected= false;
 			  return super.getTableCellRendererComponent(table,value, isSelected, hasFocus,row,column);
 		}
@@ -482,6 +454,82 @@ public class UsersPanel extends JPanel{
 			 }
 		  }
 		}
+	  
+	class CheckBoxHeader extends JCheckBox  
+		    implements TableCellRenderer, MouseListener {  
+		  protected CheckBoxHeader rendererComponent;  
+		  protected int column;  
+		  protected boolean mousePressed = false;  
+		  
+		  public CheckBoxHeader(ItemListener itemListener) {  
+		    rendererComponent = this;  
+		    rendererComponent.addItemListener(itemListener);  
+		  }  
+		  public CheckBoxHeader() {  
+			    rendererComponent = this;  
+		 }  
+		  public Component getTableCellRendererComponent(  
+		      JTable table, Object value,  
+		      boolean isSelected, boolean hasFocus, int row, int column) {  
+		    if (table != null && column>0 && column< table.getColumnCount()-3) {  
+		      JTableHeader header = table.getTableHeader();  
+		      if (header != null) {  
+		        rendererComponent.setForeground(header.getForeground());  
+		        rendererComponent.setBackground(header.getBackground());  
+		        rendererComponent.setFont(header.getFont());  
+		        if(searchSelColset.contains(column))
+		        	rendererComponent.setSelected(true);
+		        else
+		        	rendererComponent.setSelected(false);
+		        header.addMouseListener(rendererComponent);  
+		      }  
+		      setColumn(column);  
+			    rendererComponent.setText(table.getColumnName(column));  
+			    setBorder(UIManager.getBorder("TableHeader.cellBorder"));  
+			    return rendererComponent;  
+		    }else if(table!=null){
+		    	return new JLabel(table.getColumnName(column));
+		    }else{
+		    	return null;
+		    }
+		    
+		  }  
+		  protected void setColumn(int column) {  
+		    this.column = column;  
+		  }  
+		  public int getColumn() {  
+		    return column;  
+		  }  
+		  protected void handleClickEvent(MouseEvent e) {  
+		    if (mousePressed) {  
+		      mousePressed=false;  
+		      JTableHeader header = (JTableHeader)(e.getSource());  
+		      JTable tableView = header.getTable();  
+		      TableColumnModel columnModel = tableView.getColumnModel();  
+		      int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
+		      if(searchSelColset.contains(viewColumn)){
+		    	  searchSelColset.remove(viewColumn);
+		      }else{
+		    	  searchSelColset.add(viewColumn);
+		      }
+		      
+		        doClick();  
+		    }  
+		  }  
+		  public void mouseClicked(MouseEvent e) {  
+		    handleClickEvent(e);  
+		    ((JTableHeader)e.getSource()).repaint();  
+		  }  
+		  public void mousePressed(MouseEvent e) {  
+		    mousePressed = true;  
+		  }  
+		  public void mouseReleased(MouseEvent e) {  
+		  }  
+		  public void mouseEntered(MouseEvent e) {  
+		  }  
+		  public void mouseExited(MouseEvent e) {  
+		  }  
+}  
 	
 	public void setTable(String mode) {
 		// TODO Auto-generated method stub
@@ -569,11 +617,13 @@ public class UsersPanel extends JPanel{
 		
 			for(int row = 0; row < table.getRowCount(); row++){
 				for(int col = 1; col < table.getColumnCount()-3; col++){
-					String next = (table.getValueAt(row, col)!=null)?table.getValueAt(row, col).toString() : "";
-					if(matchSearchText(next,searchText)){
-						//showSearchResults(row, col);
-						//return;
-						searchIndexList.add(new TableIndex(row, col));
+					if(searchSelColset.contains(col)){
+						String next = (table.getValueAt(row, col)!=null)?table.getValueAt(row, col).toString() : "";
+						if(matchSearchText(next,searchText)){
+							//showSearchResults(row, col);
+							//return;
+							searchIndexList.add(new TableIndex(row, col));
+						}
 					}
 				}
 			}
