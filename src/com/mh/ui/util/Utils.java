@@ -27,7 +27,7 @@ public class Utils {
 	}
 	
 	public static String getConfigValue(String key){
-		String resultPath = null;
+		String resultPath = "";
 		try{
 			Properties prop = new Properties();
 			prop.load(new FileInputStream("config.properties"));
