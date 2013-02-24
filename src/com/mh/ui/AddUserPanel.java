@@ -209,18 +209,19 @@ public class AddUserPanel extends UserView{
 						
 					}.start();
 					
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 					
 					  new Thread(){
 
 							@Override
 							public void run() {
 								done = new UserService().save(getUser(),AddUserPanel.this);
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								usersPanel.setTable(getOperation());
 								getMain().getSplitPane().setRightComponent(usersPanel);
 							}
