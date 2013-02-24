@@ -183,7 +183,6 @@ public class UserDAO {
 			
 			pStmt = conn.prepareStatement(findUserDataByUserId);
 			pStmt.setLong(1, (id!=null)?id.intValue():-1l);
-			pStmt.setString(2, HMConstants.ACTIVE);
 			ResultSet res= pStmt.executeQuery() ;
 			if(res != null){
 				userDataList = new ArrayList<UserData>();
