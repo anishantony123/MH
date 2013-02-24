@@ -32,6 +32,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -416,7 +417,12 @@ public class UsersPanel extends JPanel{
 		     //perform button actionof this row
 		    	if(HMConstants.DELETE.equals(tooltip)){
 		    		if( Main.session.isValid()){
-		    			new UserService().deactivateUser(user);
+		    			int option = JOptionPane.showConfirmDialog(UsersPanel.this, "Do you want to delete this record ?", "Delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    			System.out.println(option);
+		    			if(option == 0)// for yes
+		    				new UserService().deactivateUser(user);
+		    		}else{
+		    			JOptionPane.showMessageDialog(UsersPanel.this, "You are not logged in !");
 		    		}
 		    		
 		    	}else{
