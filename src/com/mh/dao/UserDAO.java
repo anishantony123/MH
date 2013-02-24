@@ -39,7 +39,7 @@ public class UserDAO {
 			" where id = ?";
 	private String toggleactivateUser="update users set active_YN = ? where id = ? ";
 	private String findUserById="select * from user where id = ? and active_YN = ?";
-	private String findUserDataByUserId="select * from user_data where USER_ID s= ? order by SEQUENCE";
+	private String findUserDataByUserId="select * from user_data where USER_ID = ? order by SEQUENCE";
 	private String fileInsertQuery="INSERT INTO user_data (USER_ID, DATAFILE_NAME,DATAFILE_CONTENT, SEQUENCE) VALUES (?,?,?,?)";
 	//private String fileUpdateQuery="INSERT INTO user_data (`USER_ID`, `DATAFILE_NAME`,'DATAFILE_CONTENT', `SEQUENCE`) VALUES (?,?,? ?)";
 	
