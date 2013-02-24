@@ -197,14 +197,20 @@ public class AddUserPanel extends UserView{
 								dialog.setLocationRelativeTo(AddUserPanel.this);
 								dialog.setAlwaysOnTop(true);
 								progressBar.setValue(timer);
-								try {
-									Thread.sleep(300);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+								waitTill(300);
 							}
+							progressBar.setValue(100);
+							waitTill(400);
 							dialog.setVisible(false);
+						}
+
+						public void waitTill(int time) {
+							try {
+								Thread.sleep(time);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						
 					}.start();
