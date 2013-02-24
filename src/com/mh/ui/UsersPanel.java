@@ -73,6 +73,7 @@ public class UsersPanel extends JPanel{
 		public UsersPanel(Main main) {
 		try {
 		this.main=main;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 100, 40, 40 , 20,20, 20, 0, 10};
 		gridBagLayout.rowHeights = new int[]{0, 0, 39,30,94,0};
@@ -114,7 +115,7 @@ public class UsersPanel extends JPanel{
 		JButton btnSearch = new JButton(ImageUtil.getIcon(HMConstants.SEARCH_IMG));
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted( false );
-		btnSearch.setToolTipText("<html>Click to search.</html>");
+		btnSearch.setToolTipText("<html>Search(checked columns).</html>");
 		btnSearch.setMinimumSize(new Dimension(100, 40));
 		btnSearch.setPreferredSize(new Dimension(110, 40));
 		btnSearch.setMaximumSize(new Dimension(110,Short.MAX_VALUE));
@@ -148,7 +149,7 @@ public class UsersPanel extends JPanel{
 		refreshButton.setMinimumSize(new Dimension(30, 30));
 		refreshButton.setPreferredSize(new Dimension(40, 40));
 		refreshButton.setMaximumSize(new Dimension(50,Short.MAX_VALUE));
-		refreshButton.setToolTipText("<html>Click to reset.</html>");
+		refreshButton.setToolTipText("<html>Reset.</html>");
 		GridBagConstraints gbc_btnRefresh = Utils.getConStraints(3, 2, null);
 		gbc_btnRefresh.anchor = GridBagConstraints.WEST;
 		add(refreshButton, gbc_btnRefresh);
@@ -269,6 +270,9 @@ public class UsersPanel extends JPanel{
 		dm.addColumn("hidden1");
 		dm.addColumn("hidden2");
 		
+		//initially checked all columns
+		for(int i=1;i<8;i++)
+			searchSelColset.add(i);
 	/*	TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dm);
 		table.setRowSorter(sorter);*/
 		
