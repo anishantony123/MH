@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import com.Main;
 import com.mh.model.HMConstants;
+import com.mh.service.AdminService;
 import com.mh.service.BackupService;
 import com.mh.ui.exception.OnFailure;
 import com.mh.ui.exception.OnSuccess;
@@ -34,17 +35,21 @@ public class AdvancedPanel extends JPanel{
 	private Main main;
 	@Required(message="Backup file can't be empty",target="backupFile")
 	private JTextField backupFile;
+	//private JTextField exportFile;
 	private JFileChooser backupFileChooser;
 	@Required(message="Restore file can't be empty",target="restoreFile")
 	private JTextField restoreFile;
+	private JTextField exportExcel;
 	private JFileChooser restoreFileChooser;
 	private JButton bChooser;
 	private JButton backup;
 	private JButton rChooser;
+	private JButton export;
+	private JButton xlsChooser;
 	private JButton restore;
 	private String backupPath=null;
 	private String restorePath=null;
-	
+	private AdminService adminService;
 	protected boolean hasErrors=false;
 	protected List<ValidationMsg> resultList;
 	List<ValidationListener> validationRegistry;
@@ -158,6 +163,59 @@ public class AdvancedPanel extends JPanel{
 						e.printStackTrace();
 					}
 				}
+			}
+			
+		});
+		
+		//export
+		
+		JLabel exportFileName = new JLabel("Export to excel: ");
+		GridBagConstraints gbc_exportfileName = Utils.getConStraints(1,5,null);
+		add(exportFileName, gbc_exportfileName);
+		
+		exportExcel = new JTextField();
+		exportExcel.setEditable(false);
+		GridBagConstraints gbc_exportFile = Utils.getConStraints(2,5,null);
+		gbc_exportFile.fill = GridBagConstraints.HORIZONTAL;
+		add(exportExcel, gbc_exportFile);
+		
+		xlsChooser = new JButton("Browse");
+		GridBagConstraints gbc_xlsChooser = Utils.getConStraints(3,5,null);
+		add(xlsChooser, gbc_xlsChooser);
+		xlsChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				backupPath="";
+				
+					backupFileChooser =  new JFileChooser();
+					File []result= Utils.choosedFiles(backupFileChooser,AdvancedPanel.this.main,HMConstants.BACKUP_DIR,JFileChooser.DIRECTORIES_ONLY,false);
+					if(result != null){
+						for(File f: result){
+							backupPath = f.getAbsolutePath().toString()+"\\HMExcel.xls";
+							exportExcel.setText(backupPath);
+							System.out.println(backupPath);
+							break;
+						}
+					}
+				
+			}
+
+		});
+		
+		export = new JButton("Export");
+		GridBagConstraints gbc_export = Utils.getConStraints(4,5,null);
+		add(export, gbc_export);
+		export.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+					try {
+						
+						adminService=new AdminService();
+						adminService.exportToExcel(exportExcel.getText().toString());
+						
+					} catch (Exception e) {
+						
+					} 
+				
 			}
 			
 		});

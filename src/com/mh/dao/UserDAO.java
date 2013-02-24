@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -40,6 +41,7 @@ public class UserDAO {
 	private String toggleactivateUser="update users set active_YN = ? where id = ? ";
 	private String findUserById="select * from user where id = ? and active_YN = ?";
 	private String findUserDataByUserId="select * from user_data where USER_ID s= ? order by SEQUENCE";
+	private String findAllUsersForXls="select * from users where active_YN = 'A'";
 	private String fileInsertQuery="INSERT INTO user_data (USER_ID, DATAFILE_NAME,DATAFILE_CONTENT, SEQUENCE) VALUES (?,?,?,?)";
 	//private String fileUpdateQuery="INSERT INTO user_data (`USER_ID`, `DATAFILE_NAME`,'DATAFILE_CONTENT', `SEQUENCE`) VALUES (?,?,? ?)";
 	
@@ -150,6 +152,27 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		return users;
+		
+	}
+	
+	public ResultSet getUsersForXls(){
+			Statement stmt;
+			ResultSet res = null;
+			try {
+				stmt = ConnectionManager.createConnection().createStatement();
+			
+				res= stmt.executeQuery(findAllUsersForXls) ;
+			
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				ConnectionManager.inValidateConnection();
+			}catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return res;
 		
 	}
 	
