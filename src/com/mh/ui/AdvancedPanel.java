@@ -63,7 +63,9 @@ public class AdvancedPanel extends JPanel{
 		GridBagConstraints gbc_backupfileName = Utils.getConStraints(1,2,null);
 		add(backupfileName, gbc_backupfileName);
 		
-		backupFile = new JTextField(Utils.getConfigValue("backupChooserDir")+"backup.sql");
+		String currBackup= Utils.getConfigValue("backupChooserDir");
+		
+		backupFile = new JTextField((currBackup.endsWith(Pattern.quote(File.separator))?currBackup:currBackup+File.separator)+"backup.sql");
 		GridBagConstraints gbc_backupFile = Utils.getConStraints(2,2,null);
 		gbc_backupFile.fill = GridBagConstraints.HORIZONTAL;
 		add(backupFile, gbc_backupFile);
