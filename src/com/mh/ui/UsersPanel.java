@@ -84,7 +84,7 @@ public class UsersPanel extends JPanel{
 		addNewButton = new JButton(ImageUtil.getIcon(HMConstants.ADDNEW_IMG));
 		addNewButton.setContentAreaFilled(false);
 		addNewButton.setBorderPainted( false );
-		addNewButton.setToolTipText("<html>Add new Patient.</html>");
+		addNewButton.setToolTipText("<html>Add new Patient</html>");
 		//addNewButton = new JButton("Add New");
 		addNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,7 +115,7 @@ public class UsersPanel extends JPanel{
 		JButton btnSearch = new JButton(ImageUtil.getIcon(HMConstants.SEARCH_IMG));
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted( false );
-		btnSearch.setToolTipText("<html>Search(checked columns).</html>");
+		btnSearch.setToolTipText("<html>Search(checked columns)</html>");
 		btnSearch.setMinimumSize(new Dimension(100, 40));
 		btnSearch.setPreferredSize(new Dimension(110, 40));
 		btnSearch.setMaximumSize(new Dimension(110,Short.MAX_VALUE));
@@ -149,7 +149,7 @@ public class UsersPanel extends JPanel{
 		refreshButton.setMinimumSize(new Dimension(30, 30));
 		refreshButton.setPreferredSize(new Dimension(40, 40));
 		refreshButton.setMaximumSize(new Dimension(50,Short.MAX_VALUE));
-		refreshButton.setToolTipText("<html>Reset.</html>");
+		refreshButton.setToolTipText("<html>Reset</html>");
 		GridBagConstraints gbc_btnRefresh = Utils.getConStraints(3, 2, null);
 		gbc_btnRefresh.anchor = GridBagConstraints.WEST;
 		add(refreshButton, gbc_btnRefresh);
