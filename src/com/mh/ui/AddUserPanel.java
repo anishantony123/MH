@@ -1,5 +1,6 @@
 package com.mh.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -13,9 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.border.Border;
 
 import com.Main;
 import com.mh.model.HMConstants;
@@ -23,6 +30,7 @@ import com.mh.model.UserData;
 import com.mh.service.PDFServices;
 import com.mh.service.UserService;
 import com.mh.ui.images.ImageUtil;
+import com.mh.ui.util.Utils;
 import com.mh.ui.view.UserView;
 
 public class AddUserPanel extends UserView{
@@ -32,6 +40,13 @@ public class AddUserPanel extends UserView{
 	private JButton btnUpload;
 	private UsersPanel usersPanel;
 	private Main main;
+	JOptionPane progressPane;
+	JProgressBar progressBar = new JProgressBar();
+	public Integer timer = 0;
+	JDialog dialog = new JDialog();
+	private Boolean done=false;
+
+	
 	
 	public AddUserPanel(Main main, Component component) {
 		super();
@@ -151,9 +166,66 @@ public class AddUserPanel extends UserView{
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!validateThis()){
-					new UserService().save(getUser());
-					usersPanel.setTable(getOperation());
-					getMain().getSplitPane().setRightComponent(usersPanel);
+					done = false;
+					timer =0;				
+					
+				    progressBar.setValue(timer);
+				    progressBar.setStringPainted(true);
+				    Border border = BorderFactory.createTitledBorder("Saving...");
+				    progressBar.setBorder(border);
+				    progressBar.setOpaque(true);
+				    progressBar.paintImmediately(progressBar.getBounds());
+				    progressBar.setVisible(true);
+				    
+				    
+				    
+				    dialog.add(progressBar);
+				    dialog.setUndecorated(true);
+				    dialog.setResizable(false);
+				    dialog.setMinimumSize(new Dimension(200, 50));
+				    dialog.setPreferredSize(new Dimension(200, 50));
+				    dialog.setMaximumSize(new Dimension(200,Short.MAX_VALUE));
+				    dialog.setVisible(true);
+					//JOptionPane.showMessageDialog(AddUserPanel.this, progressBar);
+					
+				    new Thread(){
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							while(timer<=100 && !done){
+								dialog.setLocationRelativeTo(AddUserPanel.this);
+								dialog.setAlwaysOnTop(true);
+								progressBar.setValue(timer);
+								try {
+									Thread.sleep(300);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							dialog.setVisible(false);
+						}
+						
+					}.start();
+					
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					  new Thread(){
+
+							@Override
+							public void run() {
+								done = new UserService().save(getUser(),AddUserPanel.this);
+								usersPanel.setTable(getOperation());
+								getMain().getSplitPane().setRightComponent(usersPanel);
+							}
+					  }.start();
+					
 				}
 				
 				
@@ -187,6 +259,14 @@ public class AddUserPanel extends UserView{
 		gbc_btnCancel.gridx = 4;
 		gbc_btnCancel.gridy = 13;
 		add(btnCancel, gbc_btnCancel);
+		
+		GridBagConstraints gbc_progressBar= Utils.getConStraints(3, 0, new Insets(0, 0, 5, 5));
+		gbc_progressBar.gridwidth=3;
+		gbc_progressBar.gridheight=1;
+		
+		progressPane = new JOptionPane();
+		
+		
 		
 		setMinimumSize(new Dimension(600, 500));
 		setPreferredSize(new Dimension(650, 500));
