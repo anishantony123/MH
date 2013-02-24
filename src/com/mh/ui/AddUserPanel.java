@@ -199,8 +199,10 @@ public class AddUserPanel extends UserView{
 								progressBar.setValue(timer);
 								waitTill(300);
 							}
-							progressBar.setValue(100);
-							waitTill(400);
+							if(done){
+								progressBar.setValue(100);
+								waitTill(400);
+							}
 							dialog.setVisible(false);
 						}
 
