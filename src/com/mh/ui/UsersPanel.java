@@ -14,16 +14,25 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,18 +42,22 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import com.Main;
 import com.mh.model.HMConstants;
 import com.mh.model.User;
 import com.mh.service.UserService;
 import com.mh.ui.images.ImageUtil;
+import com.mh.ui.util.Utils;
 
 public class UsersPanel extends JPanel{
 	private JButton addNewButton;
 	private JButton nextButton;
 	private JButton previousButton;
+	private JButton refreshButton;
 	private JLabel searchResult;
 	private JTextField searchText;
 	private JTable table;
@@ -55,14 +68,15 @@ public class UsersPanel extends JPanel{
 	private Rectangle r;
 	private int lastIndex = 0;
 	private List<TableIndex> searchIndexList = new ArrayList<UsersPanel.TableIndex>();
+	private Set<Integer> searchSelColset = new HashSet<Integer>();
 	String mode=HMConstants.VIEW;
 		public UsersPanel(Main main) {
 		try {
 		this.main=main;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{10, 125, 83, 0, 0, 10};
+		gridBagLayout.columnWidths = new int[]{10, 100, 40, 40 , 20,20, 20, 0, 10};
 		gridBagLayout.rowHeights = new int[]{0, 0, 39,30,94,0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.5,0.5,0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -101,13 +115,15 @@ public class UsersPanel extends JPanel{
 		btnSearch.setContentAreaFilled(false);
 		btnSearch.setBorderPainted( false );
 		btnSearch.setToolTipText("<html>Click to search.</html>");
+		btnSearch.setMinimumSize(new Dimension(100, 40));
+		btnSearch.setPreferredSize(new Dimension(110, 40));
+		btnSearch.setMaximumSize(new Dimension(110,Short.MAX_VALUE));
 		//btnSearch.setToolTipText("Search");
-		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_btnSearch = new GridBagConstraints();
-		gbc_btnSearch.anchor = GridBagConstraints.WEST;
 		gbc_btnSearch.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSearch.gridx = 2;
 		gbc_btnSearch.gridy = 2;
+		gbc_btnSearch.anchor = GridBagConstraints.WEST;
 		add(btnSearch, gbc_btnSearch);
 		
 		btnSearch.addActionListener(new ActionListener() {
@@ -126,16 +142,33 @@ public class UsersPanel extends JPanel{
 				
 			}
 		});
+		refreshButton = new JButton(ImageUtil.getIcon(HMConstants.REFRESH_ICON));
+		refreshButton.setContentAreaFilled(false);
+		refreshButton.setBorderPainted( false );
+		refreshButton.setMinimumSize(new Dimension(30, 30));
+		refreshButton.setPreferredSize(new Dimension(40, 40));
+		refreshButton.setMaximumSize(new Dimension(50,Short.MAX_VALUE));
+		refreshButton.setToolTipText("<html>Click to reset.</html>");
+		GridBagConstraints gbc_btnRefresh = Utils.getConStraints(3, 2, null);
+		gbc_btnRefresh.anchor = GridBagConstraints.WEST;
+		add(refreshButton, gbc_btnRefresh);
+		
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clearSearch();
+			}
+		});
+		
 		
 		GridBagConstraints gbc_addNewButton = new GridBagConstraints();
 		gbc_addNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_addNewButton.gridx = 3;
+		gbc_addNewButton.gridx = 5;
 		gbc_addNewButton.gridy = 2;
 		add(addNewButton, gbc_addNewButton);
 		
 		GridBagConstraints gbc_loginNewButton = new GridBagConstraints();
 		gbc_loginNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_loginNewButton.gridx = 3;
+		gbc_loginNewButton.gridx = 5;
 		gbc_loginNewButton.gridy = 0;
 		
 		add(main.getLoginButton(), gbc_loginNewButton);
@@ -183,7 +216,7 @@ public class UsersPanel extends JPanel{
 	//search result  end	
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 7;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
@@ -218,8 +251,11 @@ public class UsersPanel extends JPanel{
 		
 		table.setModel(dm);
 		table.setFont(new Font("Arial",Font.PLAIN,12));
-		table.getTableHeader().setFont(new Font("Time New Roman",Font.BOLD,15));
-		table.getTableHeader().setBackground(new Color(143,188,255));
+		table.getTableHeader().setFont(new Font("Time New Roman",Font.BOLD,12));
+		table.getTableHeader().setBackground(new Color(143,188,255));		
+		table.getTableHeader().setDefaultRenderer(new CheckBoxHeader());
+		table.getTableHeader().setReorderingAllowed(false);
+		//table.getTableHeader().setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), table.getBorder()));
 		
 		dm.addColumn("Edit");
 		dm.addColumn("RegNo");
@@ -315,48 +351,6 @@ public class UsersPanel extends JPanel{
 
 		  public Component getTableCellRendererComponent(JTable table, Object value,
 		      boolean isSelected, boolean hasFocus, int row, int column) {
-			/*  setValue(value);
-			       setOpaque(true);
-			       if (table == null)
-			         return this;
-			   
-			       if (isSelected)
-			         {
-			           super.setBackground(table.getSelectionBackground());
-			           super.setForeground(table.getSelectionForeground());
-			         }
-			       else
-			         {
-			           if (getBackground() != null)
-			             super.setBackground(getBackground());
-			           else
-			             super.setBackground(table.getBackground());
-			           if (getForeground() != null)
-			             super.setForeground(getForeground());
-			           else
-			             super.setForeground(table.getForeground());
-			         }
-			   
-			       Border b = null;
-			      if (hasFocus)
-			         {
-			           if (isSelected)
-			             b = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
-			           if (b == null)
-			             b = UIManager.getBorder("Table.focusCellHighlightBorder");
-			        }
-			       else
-			    	   b = noFocusBorder;
-			       setBorder(b);
-			   
-			       setFont(table.getFont());
-			   
-			       // If the current background is equal to the table's background, then we
-			       // can avoid filling the background by setting the renderer opaque.
-			       Color back = getBackground();
-			       setOpaque(back != null && back.equals(table.getBackground()));
-			       
-			       return this;  */  
 			  isSelected= false;
 			  return super.getTableCellRendererComponent(table,value, isSelected, hasFocus,row,column);
 		}
@@ -423,7 +417,12 @@ public class UsersPanel extends JPanel{
 		     //perform button actionof this row
 		    	if(HMConstants.DELETE.equals(tooltip)){
 		    		if( Main.session.isValid()){
-		    			new UserService().deactivateUser(user);
+		    			int option = JOptionPane.showConfirmDialog(UsersPanel.this, "Do you want to delete this record ?", "Delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    			System.out.println(option);
+		    			if(option == 0)// for yes
+		    				new UserService().deactivateUser(user);
+		    		}else{
+		    			JOptionPane.showMessageDialog(UsersPanel.this, "You are not logged in !");
 		    		}
 		    		
 		    	}else{
@@ -461,6 +460,82 @@ public class UsersPanel extends JPanel{
 			 }
 		  }
 		}
+	  
+	class CheckBoxHeader extends JCheckBox  
+		    implements TableCellRenderer, MouseListener {  
+		  protected CheckBoxHeader rendererComponent;  
+		  protected int column;  
+		  protected boolean mousePressed = false;  
+		  
+		  public CheckBoxHeader(ItemListener itemListener) {  
+		    rendererComponent = this;  
+		    rendererComponent.addItemListener(itemListener);  
+		  }  
+		  public CheckBoxHeader() {  
+			    rendererComponent = this;  
+		 }  
+		  public Component getTableCellRendererComponent(  
+		      JTable table, Object value,  
+		      boolean isSelected, boolean hasFocus, int row, int column) {  
+		    if (table != null && column>0 && column< table.getColumnCount()-3) {  
+		      JTableHeader header = table.getTableHeader();  
+		      if (header != null) {  
+		        rendererComponent.setForeground(header.getForeground());  
+		        rendererComponent.setBackground(header.getBackground());  
+		        rendererComponent.setFont(header.getFont());  
+		        if(searchSelColset.contains(column))
+		        	rendererComponent.setSelected(true);
+		        else
+		        	rendererComponent.setSelected(false);
+		        header.addMouseListener(rendererComponent);  
+		      }  
+		      setColumn(column);  
+			    rendererComponent.setText(table.getColumnName(column));  
+			    setBorder(UIManager.getBorder("TableHeader.cellBorder"));  
+			    return rendererComponent;  
+		    }else if(table!=null){
+		    	return new JLabel(table.getColumnName(column));
+		    }else{
+		    	return null;
+		    }
+		    
+		  }  
+		  protected void setColumn(int column) {  
+		    this.column = column;  
+		  }  
+		  public int getColumn() {  
+		    return column;  
+		  }  
+		  protected void handleClickEvent(MouseEvent e) {  
+		    if (mousePressed) {  
+		      mousePressed=false;  
+		      JTableHeader header = (JTableHeader)(e.getSource());  
+		      JTable tableView = header.getTable();  
+		      TableColumnModel columnModel = tableView.getColumnModel();  
+		      int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
+		      if(searchSelColset.contains(viewColumn)){
+		    	  searchSelColset.remove(viewColumn);
+		      }else{
+		    	  searchSelColset.add(viewColumn);
+		      }
+		      
+		        doClick();  
+		    }  
+		  }  
+		  public void mouseClicked(MouseEvent e) {  
+		    handleClickEvent(e);  
+		    ((JTableHeader)e.getSource()).repaint();  
+		  }  
+		  public void mousePressed(MouseEvent e) {  
+		    mousePressed = true;  
+		  }  
+		  public void mouseReleased(MouseEvent e) {  
+		  }  
+		  public void mouseEntered(MouseEvent e) {  
+		  }  
+		  public void mouseExited(MouseEvent e) {  
+		  }  
+}  
 	
 	public void setTable(String mode) {
 		// TODO Auto-generated method stub
@@ -548,11 +623,13 @@ public class UsersPanel extends JPanel{
 		
 			for(int row = 0; row < table.getRowCount(); row++){
 				for(int col = 1; col < table.getColumnCount()-3; col++){
-					String next = (table.getValueAt(row, col)!=null)?table.getValueAt(row, col).toString() : "";
-					if(matchSearchText(next,searchText)){
-						//showSearchResults(row, col);
-						//return;
-						searchIndexList.add(new TableIndex(row, col));
+					if(searchSelColset.contains(col)){
+						String next = (table.getValueAt(row, col)!=null)?table.getValueAt(row, col).toString() : "";
+						if(matchSearchText(next,searchText)){
+							//showSearchResults(row, col);
+							//return;
+							searchIndexList.add(new TableIndex(row, col));
+						}
 					}
 				}
 			}

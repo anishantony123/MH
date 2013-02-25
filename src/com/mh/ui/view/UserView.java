@@ -167,7 +167,7 @@ public class UserView extends JPanel{
 		address1.setFont(new Font("Arial",Font.BOLD,13));
 		GridBagConstraints gbc_address1 = new GridBagConstraints();
 		gbc_address1.gridwidth = 1;
-		gbc_address1.gridheight = 3;
+		gbc_address1.gridheight = 1;
 		gbc_address1.fill = GridBagConstraints.BOTH;
 		gbc_address1.insets = new Insets(0, 0, 5, 5);
 		gbc_address1.gridx = 3;
@@ -195,7 +195,7 @@ public class UserView extends JPanel{
 		JLabel lblNewLabel_32 = new JLabel("District");
 		GridBagConstraints gbc_lblNewLabel_32 = new GridBagConstraints();
 		gbc_lblNewLabel_32.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblNewLabel_32.gridx = 4;
+		gbc_lblNewLabel_32.gridx = 1;
 		gbc_lblNewLabel_31.gridy = 6;
 		add(lblNewLabel_32, gbc_lblNewLabel_32);
 		
@@ -206,7 +206,7 @@ public class UserView extends JPanel{
 		gbc_district.anchor = GridBagConstraints.NORTH;
 		gbc_district.fill = GridBagConstraints.HORIZONTAL;
 		gbc_district.insets = new Insets(0, 0, 5, 5);
-		gbc_district.gridx = 5;
+		gbc_district.gridx = 3;
 		gbc_district.gridy = 6;
 		add(district, gbc_district);
 		
@@ -214,7 +214,7 @@ public class UserView extends JPanel{
 		GridBagConstraints gbc_lblNewLabel_33 = new GridBagConstraints();
 		gbc_lblNewLabel_33.anchor = GridBagConstraints.NORTHWEST;
 		gbc_lblNewLabel_33.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_33.gridx = 4;
+		gbc_lblNewLabel_33.gridx = 1;
 		gbc_lblNewLabel_33.gridy = 7;
 		add(lblNewLabel_33, gbc_lblNewLabel_33);
 		
@@ -224,7 +224,7 @@ public class UserView extends JPanel{
 		gbc_state.anchor = GridBagConstraints.NORTH;
 		gbc_state.fill = GridBagConstraints.HORIZONTAL;
 		gbc_state.insets = new Insets(0, 0, 5, 5);
-		gbc_state.gridx = 5;
+		gbc_state.gridx = 3;
 		gbc_state.gridy = 7;
 		add(state, gbc_state);
 		/*JLabel lblNewLabel_4 = new JLabel("Address2");

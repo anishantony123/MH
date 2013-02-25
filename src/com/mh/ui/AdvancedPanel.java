@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -67,7 +68,7 @@ public class AdvancedPanel extends JPanel{
 		GridBagConstraints gbc_backupfileName = Utils.getConStraints(1,2,null);
 		add(backupfileName, gbc_backupfileName);
 		
-		backupFile = new JTextField();
+		backupFile = new JTextField(Utils.getConfigValue("backupChooserDir")+"backup.sql");
 		GridBagConstraints gbc_backupFile = Utils.getConStraints(2,2,null);
 		gbc_backupFile.fill = GridBagConstraints.HORIZONTAL;
 		add(backupFile, gbc_backupFile);
@@ -86,7 +87,11 @@ public class AdvancedPanel extends JPanel{
 							backupPath = f.getAbsolutePath().toString();
 							break;
 						}
-						backupPath+=File.separator+backupFile.getText();
+						String []file =(backupFile.getText()!=null)?backupFile.getText().split(Pattern.quote(File.separator)) : new String[]{"backup.sql"};
+						int length = file.length;
+						String actualFilename = file[length-1];
+						backupPath+=File.separator+actualFilename;
+						backupFile.setText(backupPath);
 					}
 				}
 			}
@@ -101,7 +106,7 @@ public class AdvancedPanel extends JPanel{
 				if(!validateThis("backupFile")){
 					try {
 						new BackupService().backupDB(Utils.getConfigValue("DBName"), 
-								Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), backupPath);
+								Utils.getConfigValue("DBUserName"), Utils.getConfigValue("DBPassword"), backupFile.getText());
 					} catch (OnSuccess e) {
 						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage());
 					} catch (OnFailure e) {

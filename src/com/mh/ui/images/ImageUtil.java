@@ -24,6 +24,7 @@ public class ImageUtil {
 	public static BufferedImage viewIcon;
 	public static BufferedImage header;
 	public static BufferedImage deleteIcon;
+	public static BufferedImage refreshIcon;
 	public static void init(){
 		try {
 			loginImg = ImageIO.read(ImageUtil.class.getClassLoader().getResource("com/mh/ui/images/login.png"));	
@@ -40,6 +41,7 @@ public class ImageUtil {
 			viewIcon = ImageIO.read(ImageUtil.class.getClassLoader().getResource("com/mh/ui/images/ViewIcon.png"));
 			header = ImageIO.read(ImageUtil.class.getClassLoader().getResource("com/mh/ui/images/hospital.png"));
 			deleteIcon = ImageIO.read(ImageUtil.class.getClassLoader().getResource("com/mh/ui/images/delete.png"));
+			refreshIcon = ImageIO.read(ImageUtil.class.getClassLoader().getResource("com/mh/ui/images/Refresh.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

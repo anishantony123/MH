@@ -13,11 +13,12 @@ import com.mh.dao.UserDAO;
 import com.mh.model.HMConstants;
 import com.mh.model.User;
 import com.mh.model.UserData;
+import com.mh.ui.AddUserPanel;
 
 public class UserService {
 	UserDAO userDAO;
 	PDFServices pdfServices;
-	public void save(User user) {
+	public Boolean save(User user,AddUserPanel addUserPanel) {
 		// TODO Auto-generated method stub
 		userDAO=new UserDAO();
 		pdfServices= new PDFServices();
@@ -28,6 +29,8 @@ public class UserService {
 				List<UserData> alreadyList = userDAO.findUserDataByuserId(user.getId());
 				currSequenceMax = (alreadyList!=null && alreadyList.size()>0)?alreadyList.size():0;
 			}
+			int length = userData.size();
+			int dx = 100/length;
 				for(UserData userD :userData){
 					List<String> files=null;
 					if((files = userD.getFilePath())!=null){						
@@ -39,11 +42,14 @@ public class UserService {
 							}
 						
 					}
+					addUserPanel.timer += dx;
+					System.out.println(addUserPanel.timer);
 				}
 			
 		}
 		user.setActiveYN(HMConstants.ACTIVE);
 		userDAO.save(user);
+		return true;
 		
 	}
 	public List<User> getUsers(){
