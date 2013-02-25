@@ -67,7 +67,7 @@ public class Validator {
         Field[] fields = obj.getClass().getDeclaredFields();
         for( int i = 0; i < fields.length; i++ ){
         	Field currentField = fields[i];
-			hasErrors = assessField(obj, resultList, currentField );          
+			hasErrors = assessField(hasErrors, obj, resultList, currentField );          
         }
         return hasErrors;
     }
@@ -154,14 +154,13 @@ public class Validator {
         for( int i = 0; i < fields.length; i++ ){
         	Field currentField = fields[i];
         	if(filterFields.contains(currentField.getName())){
-	            hasErrors = assessField(obj, resultList, currentField);
+	            hasErrors = assessField(hasErrors,obj, resultList, currentField);
         	}
         }
         return hasErrors;
     }
-	public static boolean assessField(Object obj,
+	public static boolean assessField(boolean hasErrors,Object obj,
 			List<ValidationMsg> resultList, Field currentField) {
-		boolean hasErrors = false;
 		Required annotations = (Required)currentField.getAnnotation(Required.class);
 		if(annotations != null ){
 		    try{

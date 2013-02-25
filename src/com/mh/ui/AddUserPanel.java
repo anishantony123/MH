@@ -186,7 +186,10 @@ public class AddUserPanel extends UserView{
 				    dialog.setPreferredSize(new Dimension(200, 50));
 				    dialog.setMaximumSize(new Dimension(200,Short.MAX_VALUE));
 				    dialog.setVisible(true);
-					//JOptionPane.showMessageDialog(AddUserPanel.this, progressBar);
+					/**
+					 * added 2 independent threads , first for showing progress bar 
+					 * second for save
+					 */
 					
 				    new Thread(){
 
