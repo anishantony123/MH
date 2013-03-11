@@ -1,3 +1,4 @@
+DROP database `hospital`;
 
 CREATE DATABASE `hospital` ;
 
