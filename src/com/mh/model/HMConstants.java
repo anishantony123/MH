@@ -15,9 +15,9 @@ public class HMConstants {
 	public static String tempDirectoryPath ;
 	public static String CONNECTION_DRIVER = "com.mysql.jdbc.Driver";
 	public static String CONNECTION_SUCCESS_STRING = "DB connection established successfully";
-	public static int a4Height = 1191;
+	public static int a4Height = 1684;
 	//public static int a4Height = 842;
-	public static int a4Width = 842;
+	public static int a4Width = 1191;
 	public static String DELETE="delete";
 	public static String DEACTIVE="D";
 	public static String ACTIVE="A";

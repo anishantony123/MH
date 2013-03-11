@@ -42,7 +42,7 @@ public class AddUserPanel extends UserView{
 	private Main main;
 	JOptionPane progressPane;
 	JProgressBar progressBar = new JProgressBar();
-	public Integer timer = 0;
+	public Double timer = 0.0;
 	JDialog dialog = new JDialog();
 	private Boolean done=false;
 
@@ -71,7 +71,7 @@ public class AddUserPanel extends UserView{
 			public void actionPerformed(ActionEvent arg0) {
 				UserService userService =new UserService();
 				String path =userService.viewUserDataFiles(getUser().getId());
-				String filePath=new PDFServices().mergeFiles(HMConstants.tempDirectoryPath+"/"+path);
+				String filePath=new PDFServices().mergeFiles(HMConstants.tempDirectoryPath+File.separator+path);
 				
 				new ViewerComponent().viewFile(filePath);
 			}
@@ -167,9 +167,9 @@ public class AddUserPanel extends UserView{
 			public void actionPerformed(ActionEvent arg0) {
 				if(!validateThis()){
 					done = false;
-					timer =0;				
+					timer =0.0;				
 					
-				    progressBar.setValue(timer);
+				    progressBar.setValue(timer.intValue());
 				    progressBar.setStringPainted(true);
 				    Border border = BorderFactory.createTitledBorder("Saving...");
 				    progressBar.setBorder(border);
@@ -199,7 +199,7 @@ public class AddUserPanel extends UserView{
 							while(timer<=100 && !done){
 								dialog.setLocationRelativeTo(AddUserPanel.this);
 								dialog.setAlwaysOnTop(true);
-								progressBar.setValue(timer);
+								progressBar.setValue(timer.intValue());
 								waitTill(300);
 							}
 							if(done){

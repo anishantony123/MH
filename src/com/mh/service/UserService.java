@@ -30,7 +30,7 @@ public class UserService {
 				currSequenceMax = (alreadyList!=null && alreadyList.size()>0)?alreadyList.size():0;
 			}
 			int length = userData.size();
-			int dx = 100/length;
+			double dx = 100/length;
 				for(UserData userD :userData){
 					List<String> files=null;
 					if((files = userD.getFilePath())!=null){						

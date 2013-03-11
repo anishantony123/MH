@@ -114,7 +114,7 @@ public class PDFServices {
             OutputStream file = new FileOutputStream(newPath);
             String inputImage = imagePath;
  
-            Document document = new Document(PageSize.A3, 10, 10, 10, 10);
+            Document document = new Document(PageSize.A2, 10, 10, 10, 10);
             PdfWriter.getInstance(document, file);
  
             document.open();
@@ -139,13 +139,16 @@ public class PDFServices {
 	        try {
 	            List<InputStream> pdfs = new ArrayList<InputStream>();
 	            File tempPathFiles = new File(tempPath);
-	            
-	            for(int i=0;i<tempPathFiles.list().length;i++)
-	            {
-	            	fin =new FileInputStream(tempPath+File.separator+"_"+(i+1)+".pdf");
-	            	pdfs.add(fin);
-	            	
+	            tempPathFiles.mkdir();
+	            if(tempPathFiles.list()!=null){
+		            for(int i=0;i<tempPathFiles.list().length;i++)
+		            {
+		            	fin =new FileInputStream(tempPath+File.separator+"_"+(i+1)+".pdf");
+		            	pdfs.add(fin);
+		            	
+		            }
 	            }
+	            
 	            outPath = tempPath+File.separator+"resultPdf.pdf";
 	            output = new FileOutputStream(outPath);
 	            concatPDFs(pdfs, output, true);
@@ -159,7 +162,7 @@ public class PDFServices {
 	    public void concatPDFs(List<InputStream> streamOfPDFFiles,
 	            OutputStream outputStream, boolean paginate) {
 	 
-	        Document document = new Document(PageSize.A3, 10, 10, 10, 10);
+	        Document document = new Document(PageSize.A2, 10, 10, 10, 10);
 	        try {
 	            List<InputStream> pdfs = streamOfPDFFiles;
 	            List<PdfReader> readers = new ArrayList<PdfReader>();

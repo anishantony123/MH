@@ -135,7 +135,7 @@ public class UserDAO {
 			try {
 				stmt = ConnectionManager.createConnection().createStatement();
 			
-			ResultSet res= stmt.executeQuery("Select * from users where active_YN = 'A'") ;
+			ResultSet res= stmt.executeQuery("Select * from users where active_YN = 'A' order by id desc") ;
 			if(res != null){
 				users = new ArrayList<User>();
 				while(res.next()){
