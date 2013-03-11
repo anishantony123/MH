@@ -41,9 +41,9 @@ public class UserView extends JPanel{
 	protected JTextField careOff;
 	protected JTextField informer;
 	//protected JTextArea address2;	
-	@Required(message="Address1 can't be empty",target="saddress1")
-	protected JTextArea address1;	
-	protected JScrollPane saddress1;
+	@Required(message="Address1 can't be empty",target="address1")
+	protected JTextField address1;	
+	//protected JScrollPane saddress1;
 	protected JTextField city;
 	protected JTextField district;
 	protected JTextField state;
@@ -162,8 +162,8 @@ public class UserView extends JPanel{
 		gbc_lblNewLabel_3.gridy = 5;
 		add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		address1 = new JTextArea();
-		saddress1 = new JScrollPane(address1); 
+		address1 = new JTextField();
+		///saddress1 = new JScrollPane(address1); 
 		address1.setFont(new Font("Arial",Font.BOLD,13));
 		GridBagConstraints gbc_address1 = new GridBagConstraints();
 		gbc_address1.gridwidth = 1;
@@ -172,7 +172,7 @@ public class UserView extends JPanel{
 		gbc_address1.insets = new Insets(0, 0, 5, 5);
 		gbc_address1.gridx = 3;
 		gbc_address1.gridy = 5;
-		add(saddress1, gbc_address1);
+		add(address1, gbc_address1);
 		
 		JLabel lblNewLabel_31 = new JLabel("City");
 		GridBagConstraints gbc_lblNewLabel_31 = new GridBagConstraints();

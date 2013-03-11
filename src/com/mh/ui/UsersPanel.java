@@ -254,12 +254,12 @@ public class UsersPanel extends JPanel{
 		//table.getTableHeader().setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.gray), table.getBorder()));
 		
 		dm.addColumn("Edit");
-		dm.addColumn("RegNo");
+		dm.addColumn("Reg No");
 		dm.addColumn("Name");
 		dm.addColumn("Age");
 		dm.addColumn("Sex");
 		dm.addColumn("Center");
-		dm.addColumn("Care Of");
+		dm.addColumn("Care of");
 		dm.addColumn("Informer");
 		dm.addColumn("Delete");
 		dm.addColumn("hidden1");
@@ -287,12 +287,12 @@ public class UsersPanel extends JPanel{
 	   Color f1= new Color(26,0,51);
 	   Color f2= new Color(26,0,51);
 	   
-	   table.getColumn("RegNo").setCellRenderer(new CellRenderer(b1,f1));
+	   table.getColumn("Reg No").setCellRenderer(new CellRenderer(b1,f1));
 	   table.getColumn("Name").setCellRenderer(new CellRenderer(b2,f2));
 	   table.getColumn("Age").setCellRenderer(new CellRenderer(b1,f1));
 	   table.getColumn("Sex").setCellRenderer(new CellRenderer(b2,f2));
 	   table.getColumn("Center").setCellRenderer(new CellRenderer(b1,f1));
-	   table.getColumn("Care Of").setCellRenderer(new CellRenderer(b2,f2));
+	   table.getColumn("Care of").setCellRenderer(new CellRenderer(b2,f2));
 	   table.getColumn("Informer").setCellRenderer(new CellRenderer(b1,f1));
 	   
 	   

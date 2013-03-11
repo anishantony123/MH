@@ -128,6 +128,7 @@ public class AdvancedPanel extends JPanel{
 		add(restorefileName, gbc_restorefileName);
 		
 		restoreFile = new JTextField();
+		restoreFile.setEditable(false);
 		GridBagConstraints gbc_restoreFile = Utils.getConStraints(2,4,null);
 		gbc_restoreFile.fill = GridBagConstraints.HORIZONTAL;
 		add(restoreFile, gbc_restoreFile);
