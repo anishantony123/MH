@@ -18,7 +18,7 @@ CREATE TABLE `hospital`.`users` (
   `company` varchar(45) DEFAULT NULL,
   `address_1` varchar(1000) DEFAULT NULL,
   `address_2` varchar(1000) DEFAULT NULL,
-  `address_3` varchar(1000) DEFAULT NULL,
+  `pincode` varchar(1000) DEFAULT NULL,
   `district` varchar(45) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
   `year` varchar(45) DEFAULT NULL,

@@ -53,6 +53,7 @@ public class UserView extends JPanel{
 	protected boolean hasErrors=false;
 	protected List<ValidationMsg> resultList;
 	protected List<ValidationListener> validationRegistry;
+	protected JTextField pin;
 	
 	public UserView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -227,6 +228,24 @@ public class UserView extends JPanel{
 		gbc_state.gridx = 3;
 		gbc_state.gridy = 7;
 		add(state, gbc_state);
+		
+		JLabel lblNewLabel_43 = new JLabel("Pincode");
+		GridBagConstraints gbc_lblNewLabel_43 = new GridBagConstraints();
+		gbc_lblNewLabel_43.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel_43.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_43.gridx = 4;
+		gbc_lblNewLabel_43.gridy = 7;
+		add(lblNewLabel_43, gbc_lblNewLabel_43);
+		
+		pin = new JTextField();
+		pin.setFont(new Font("Arial",Font.BOLD,13));
+		GridBagConstraints gbc_pin = new GridBagConstraints();
+		gbc_pin.anchor = GridBagConstraints.NORTH;
+		gbc_pin.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pin.insets = new Insets(0, 0, 5, 5);
+		gbc_pin.gridx = 5;
+		gbc_pin.gridy = 7;
+		add(pin, gbc_pin);
 		/*JLabel lblNewLabel_4 = new JLabel("Address2");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.WEST;
@@ -246,7 +265,7 @@ public class UserView extends JPanel{
 		gbc_address2.gridy = 6;
 		add(saddress2, gbc_address2);*/
 		
-		JLabel lblNewLabel_4 = new JLabel("Care Of");
+		JLabel lblNewLabel_4 = new JLabel("Care of");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
@@ -339,7 +358,7 @@ public class UserView extends JPanel{
 		user.setCity(city.getText());
 		user.setDistrict(district.getText());
 		user.setState(state.getText());
-		//user.setAddress2(address2.getText());
+		user.setPincode(pin.getText());
 		user.setName(name.getText());
 		int age01 = (age.getSelectedItem()!=null && !age.getSelectedItem().toString().equals(""))?Integer.parseInt(age.getSelectedItem().toString()):0;
 				
@@ -395,7 +414,7 @@ public class UserView extends JPanel{
 			city.setText(user.getCity());
 			district.setText(user.getDistrict());
 			state.setText(user.getState());
-			//address2.setText(user.getAddress2());
+			pin.setText(user.getPincode());
 			center.setText(user.getCenter());
 			diagonosis.setText(user.getDiagonosis());
 			sex.setSelectedItem(user.getSex());

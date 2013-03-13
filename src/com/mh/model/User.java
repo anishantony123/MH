@@ -11,7 +11,7 @@ public class User {
 	private Date dob;
 	private String address1;
 	private String address2;
-	private String address3;
+	private String pincode;
 	private String city;
 	private String district;
 	private String state;	
@@ -66,11 +66,12 @@ public class User {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public String getAddress3() {
-		return address3;
+	
+	public String getPincode() {
+		return pincode;
 	}
-	public void setAddress3(String address3) {
-		this.address3 = address3;
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 	public String getRegNo() {
 		return regNo;

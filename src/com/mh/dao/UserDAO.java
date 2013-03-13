@@ -29,14 +29,14 @@ public class UserDAO {
 			" VALUES"+
 			" (?,?,? ,?, ?, ?, ?, ?, ?, ?, ?, ?)";*/
 	private String saveQuery="insert into users"+"" +
-			"( `name`, `reg_no`, `age`, `address_1`, `address_2`, `year`, `diaganosis`, `center`, `active_YN`,`sex`, `created_by`, `created_date`,`care_off`,`informer`,`city`,`district`,`state`)"+
+			"( `name`, `reg_no`, `age`, `address_1`, `pincode`, `year`, `diaganosis`, `center`, `active_YN`,`sex`, `created_by`, `created_date`,`care_off`,`informer`,`city`,`district`,`state`)"+
 			" VALUES"+
 			" (?,?,? ,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)";
 	/*private String updateQuery="update users set "+
 			"name=?, reg_no=?, dob=?, address_1=?, address_2=?, year=?, diaganosis=?, center=?, active_YN=?, sex=?,modified_by=?, modified_date=?"+
 			" where id = ?";*/
 	private String updateQuery="update users set "+
-			"name=?, reg_no=?, age=?, address_1=?, address_2=?, year=?, diaganosis=?, center=?, active_YN=?, sex=?,modified_by=?, modified_date=?, care_off=? ,informer=?, city=?, district=?,state=?"+
+			"name=?, reg_no=?, age=?, address_1=?, pincode=?, year=?, diaganosis=?, center=?, active_YN=?, sex=?,modified_by=?, modified_date=?, care_off=? ,informer=?, city=?, district=?,state=?"+
 			" where id = ?";
 	private String toggleactivateUser="update users set active_YN = ? where id = ? ";
 	private String findUserById="select * from user where id = ? and active_YN = ?";
@@ -69,7 +69,7 @@ public class UserDAO {
 			//pStmt.setDate(3, user.getDob()!=null ?new Date(user.getDob().getTime()):null);
 			pStmt.setInt(3, user.getAge()!=null ?user.getAge():0);
 			pStmt.setString(4, user.getAddress1());
-			pStmt.setString(5, user.getAddress2());
+			pStmt.setString(5, user.getPincode());
 			pStmt.setString(6, user.getYear());
 			pStmt.setString(7, user.getDiagonosis());
 			pStmt.setString(8, user.getCenter());
@@ -265,7 +265,7 @@ public class UserDAO {
 			user.setAge((res.getInt("age")>0)?res.getInt("age"):null);
 			user.setAddress1(res.getString("address_1"));
 			user.setAddress2(res.getString("address_2"));
-			user.setAddress3(res.getString("address_3"));
+			user.setPincode(res.getString("pincode"));
 			user.setYear(res.getString("year"));
 			user.setDiagonosis(res.getString("diaganosis"));
 			user.setCenter(res.getString("center"));
