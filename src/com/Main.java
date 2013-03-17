@@ -8,9 +8,13 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -339,11 +343,28 @@ public class Main extends JFrame {
 		HMConstants.CONNECTION_STRING = prop.getProperty("ConnectionString").toString();
 		HMConstants.CONNECTION_USRNAME = prop.getProperty("DBUserName").toString();
 		HMConstants.CONNECTION_PASSWORD = prop.getProperty("DBPassword").toString();
-		HMConstants.tempDirectoryPath = prop.getProperty("tempDirectory").toString();
+		//HMConstants.tempDirectoryPath = prop.getProperty("tempDirectory").toString();
+		HMConstants.tempDirectoryPath = getTempDirectoryPath();
 		}catch(Exception e){
 			
 		}
 	}
+	private static String getTempDirectoryPath() throws Exception {
+		//File file = new File("C:/path.txt");
+		String resultString = null;
+		FileInputStream fis = new FileInputStream("path.txt");
+		DataInputStream in = new DataInputStream(fis);
+		  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		  String strLine;
+		  //Read File Line By Line
+		  while ((strLine = br.readLine()) != null)   {
+		  // Print the content on the console
+			  resultString=strLine;
+		  System.out.println (strLine);
+		  }
+		return resultString;
+	}
+
 	public static void cleanDir(String tempdirectorypath) {
 		if(tempdirectorypath!=null && !tempdirectorypath.trim().equals("")){
 			File f= new File(tempdirectorypath);

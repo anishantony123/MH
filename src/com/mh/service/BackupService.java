@@ -21,7 +21,9 @@ public class BackupService {
        
 
     }
-	public void restoreDB(String dbUserName, String dbPassword, String source) throws Throwable {
+public void restoreDB(String dbUserName, String dbPassword, String source) throws Throwable {
+		
+		
 
         String[] executeCmd = new String[]{"mysql", "--user=" + dbUserName, "--password=" + dbPassword, "-e", "source "+source};
 
@@ -37,6 +39,10 @@ public class BackupService {
             }
     }
 	public void dropAndRestoreDB(String dbName, String dbUserName, String dbPassword, String source) throws Throwable {
+		System.out.println("DB Username:"+dbUserName);
+		System.out.println("DB Password:"+dbPassword);
+		System.out.println("DB Name:"+dbName);
+		System.out.println("DB Source:"+source);
 
         String[] executeCmd = new String[]{"mysql", "--user=" + dbUserName, "--password=" + dbPassword, dbName,"-e", "source "+source};
 

@@ -636,7 +636,7 @@ public class UsersPanel extends JPanel{
 	private boolean matchSearchText(String currentText,String searchText){
 		boolean matched = false;
 		if(currentText !=null && searchText != null){
-			 if(currentText.toLowerCase(Locale.ENGLISH).contains(searchText.toLowerCase(Locale.ENGLISH))){
+			 if(currentText.toLowerCase(Locale.ENGLISH).startsWith(searchText.toLowerCase(Locale.ENGLISH))){
 				 matched = true;
 			 }
 		}
