@@ -7,7 +7,7 @@ public class BackupService {
 
 	public void backupDB(String dbName, String dbUserName, String dbPassword, String path) throws Throwable {
 
-        String executeCmd = "mysqldump -u " + dbUserName + " -p" + dbPassword + " --add-drop-database -B " + dbName + " -r " + path;
+        String executeCmd = "mysqldump -u " + dbUserName + " -p" + dbPassword + " --add-drop-database -B " + dbName + " -r \"" + path+"\"";
         Process runtimeProcess;
        
             runtimeProcess = Runtime.getRuntime().exec(executeCmd);

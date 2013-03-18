@@ -334,7 +334,7 @@ public class UsersPanel extends JPanel{
 			e.printStackTrace();
 		}
 	
-		setTable(mode);
+		//setTable(mode);
 		
 		// end table
 	
@@ -582,6 +582,11 @@ public class UsersPanel extends JPanel{
 		searchIndexList.clear();
 		lastIndex =0;
 	}
+	public void clearTable(){
+		clearSearch();
+		dm.getDataVector().removeAllElements();
+		table.setRowHeight(1);
+	}
 	public Main getMain() {
 		return main;
 	}
@@ -619,7 +624,7 @@ public class UsersPanel extends JPanel{
 		this.dm = dm;
 	}
 	private void search(String searchText){
-		
+		searchIndexList.clear();
 			for(int row = 0; row < table.getRowCount(); row++){
 				for(int col = 1; col < table.getColumnCount()-3; col++){
 					if(searchSelColset.contains(col)){

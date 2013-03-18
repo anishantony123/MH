@@ -425,7 +425,7 @@ public class Main extends JFrame {
 		btnUsers.setEnabled(false);
 		btnSettings.setVisible(false);
 		UsersPanel usersPanel = (UsersPanel)getSplitPane().getRightComponent();
-		usersPanel.setTable(HMConstants.VIEW);
+		usersPanel.clearTable();
 		usersPanel.setMode(HMConstants.VIEW);
 		usersPanel.getAddNewButton().setVisible(false);
 	}
