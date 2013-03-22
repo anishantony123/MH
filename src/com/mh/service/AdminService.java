@@ -34,10 +34,10 @@ public class AdminService {
 		adminDAO = new AdminDAO();
 		adminDAO.save(admin);
 	}
-	public void exportToExcel(String fileName) {
+	public void exportToExcel(String fileName) throws Exception{
 		// TODO Auto-generated method stub
 		// Create new Excel workbook and sheet
-		try{
+		
 		userDAO = new UserDAO();
 	    HSSFWorkbook xlsWorkbook = new HSSFWorkbook();
 	    HSSFSheet xlsSheet = xlsWorkbook.createSheet();
@@ -66,10 +66,7 @@ public class AdminService {
 	    
 	    // Write to disk
 	    xlsWorkbook.write(new FileOutputStream(fileName));
-		}
-		catch(Exception ee){
-			System.out.println(ee);
-		}
+		
 	}
 
 }

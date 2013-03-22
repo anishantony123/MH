@@ -40,7 +40,7 @@ public class UserDAO {
 			" where id = ?";
 	private String toggleactivateUser="update users set active_YN = ? where id = ? ";
 	private String findUserById="select * from user where id = ? and active_YN = ?";
-	private String findAllUsersForXls="select * from users where active_YN = 'A'";
+	private String findAllUsersForXls="select `name`, `reg_no`, `age`, `address_1`,`city`,`district`,`state`, `pincode`, `year`, `diaganosis`, `center`, `active_YN`,`sex`, `created_by`, `created_date`,`care_off`,`informer` from users where active_YN = 'A'";
 	private String findUserDataByUserId="select * from user_data where USER_ID = ? order by SEQUENCE";
 	private String fileInsertQuery="INSERT INTO user_data (USER_ID, DATAFILE_NAME,DATAFILE_CONTENT, SEQUENCE) VALUES (?,?,?,?)";
 	//private String fileUpdateQuery="INSERT INTO user_data (`USER_ID`, `DATAFILE_NAME`,'DATAFILE_CONTENT', `SEQUENCE`) VALUES (?,?,? ?)";

@@ -42,6 +42,12 @@ public class Login extends JInternalFrame{
 	public void setMain(Main main) {
 		this.main = main;
 	}
+
+	public void clear() {
+		// TODO Auto-generated method stub
+		login.getUserNameField().setText("");
+		login.getPasswordField().setText("");
+	}
 	
 	
 

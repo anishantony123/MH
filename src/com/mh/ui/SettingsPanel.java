@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -183,13 +184,15 @@ public class SettingsPanel extends JPanel{
 					Admin admin =new Admin();
 					admin.setUsername(userField.getText());
 					admin.setPassword(new String(passwordField.getPassword()));
-					
+					String msg = "Updated";
 					if(mode.equals("0")){//edit me
 						new AdminService().updateAdminByName(admin);
 						Main.session.setPassword(admin.getPassword());
 					}else{
 						new AdminService().save(admin);
+						msg ="Saved";
 					}
+					JOptionPane.showMessageDialog(SettingsPanel.this, msg+" successfully!");
 					reset();
 				}
 			}

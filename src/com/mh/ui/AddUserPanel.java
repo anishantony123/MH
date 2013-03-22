@@ -23,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.Main;
 import com.mh.model.HMConstants;
@@ -111,6 +113,8 @@ public class AddUserPanel extends UserView{
 			private File[] getFileInfoFromChooser() {
 				File[] result = null;
 				JFileChooser chooser = new JFileChooser();
+				 FileFilter filter = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg","png","bmp","gif");
+				 chooser.addChoosableFileFilter(filter);
 				chooser.setCurrentDirectory(new File(getCurrentDirectory()));
 				chooser.setMultiSelectionEnabled(true);
 				int option = chooser.showSaveDialog(AddUserPanel.this.main);

@@ -63,6 +63,7 @@ public class UsersPanel extends JPanel{
 	private Rectangle r;
 	private int lastIndex = 0;
 	private List<TableIndex> searchIndexList = new ArrayList<UsersPanel.TableIndex>();
+	private Set<User> searchedUserList = new HashSet<User>();//list of unique users after search
 	private Set<Integer> searchSelColset = new HashSet<Integer>();
 	String mode=HMConstants.VIEW;
 		public UsersPanel(Main main) {
@@ -123,19 +124,22 @@ public class UsersPanel extends JPanel{
 		add(btnSearch, gbc_btnSearch);
 		
 		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
-				searchIndexList.clear();
-				String target = searchText.getText();
-				if(target!=null && !target.trim().equals("")){			
-					search(target);
-					setSearchVisibility(true);					
-					navigateSearch("");
-				}else{
-					r=null;
-					table.repaint();
-					setSearchVisibility(false);
+			public void actionPerformed(ActionEvent arg0) {
+				if(Main.session.isValid()){
+					searchIndexList.clear();
+					String target = searchText.getText();
+					if(target!=null && !target.trim().equals("")){			
+						search(target);
+						setSearchVisibility(true);					
+						navigateSearch("");
+					}else{
+						r=null;
+						table.repaint();
+						setSearchVisibility(false);
+				//		setTable(HMConstants.EDIT); //enable if blank search need refresh table
+					}
+					
 				}
-				
 			}
 		});
 		refreshButton = new JButton(ImageUtil.getIcon(HMConstants.REFRESH_ICON));
@@ -151,7 +155,9 @@ public class UsersPanel extends JPanel{
 		
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				clearSearch();
+				if(Main.session.isValid()){
+					setTable(HMConstants.EDIT);
+				}
 			}
 		});
 		
@@ -543,13 +549,24 @@ public class UsersPanel extends JPanel{
 		
 			//dm.setRowCount(0);
 		
+		
+		setTableValues(mode, users);
+		
+	}
+	/**
+	 * will populate with list of users table
+	 * 
+	 * @param mode
+	 * @param users
+	 */
+	private void setTableValues(String mode, List<User> users) {
+		
 		dm.getDataVector().removeAllElements();
 		if(!mode.equals(HMConstants.VIEW)){
 			mode = HMConstants.EDIT;
 		}
 		this.table.getColumnModel().getColumn(0).setHeaderValue(mode);
-		/*Object[ ] dummy={null,null,null,null,null,null,null,null,null,null,null};
-		dm.addRow(dummy);*/	
+		
 		if(users!=null && !users.isEmpty()){
 			table.setRowHeight(25);
 			for(User user :users){
@@ -573,7 +590,6 @@ public class UsersPanel extends JPanel{
 		}else{
 			table.setRowHeight(1);//if last user is deleted , row still shown as first row
 		}
-		
 	}
 	private void clearSearch() {
 		setSearchVisibility(false);
@@ -625,18 +641,21 @@ public class UsersPanel extends JPanel{
 	}
 	private void search(String searchText){
 		searchIndexList.clear();
+		searchedUserList.clear();
 			for(int row = 0; row < table.getRowCount(); row++){
 				for(int col = 1; col < table.getColumnCount()-3; col++){
 					if(searchSelColset.contains(col)){
 						String next = (table.getValueAt(row, col)!=null)?table.getValueAt(row, col).toString() : "";
 						if(matchSearchText(next,searchText)){
-							//showSearchResults(row, col);
-							//return;
+							if(table.getValueAt(row, 10) instanceof User){
+								searchedUserList.add((User)table.getValueAt(row, 10));
+							}
 							searchIndexList.add(new TableIndex(row, col));
 						}
 					}
 				}
 			}
+			setTableValues(HMConstants.EDIT,new ArrayList<User>(searchedUserList));
 	}
 	private boolean matchSearchText(String currentText,String searchText){
 		boolean matched = false;

@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
-
+@Deprecated
 public class LogoutPanel extends JPanel{
 	public LogoutPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();

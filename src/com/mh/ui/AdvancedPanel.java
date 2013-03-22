@@ -75,7 +75,7 @@ public class AdvancedPanel extends JPanel{
 		gbc_backupFile.fill = GridBagConstraints.HORIZONTAL;
 		add(backupFile, gbc_backupFile);
 		
-		bChooser = new JButton("Location");
+		bChooser = new JButton("Browse");
 		GridBagConstraints gbc_bChooser = Utils.getConStraints(3,2,null);
 		add(bChooser, gbc_bChooser);
 		bChooser.addActionListener(new ActionListener() {
@@ -133,7 +133,7 @@ public class AdvancedPanel extends JPanel{
 		gbc_restoreFile.fill = GridBagConstraints.HORIZONTAL;
 		add(restoreFile, gbc_restoreFile);
 		
-		rChooser = new JButton("File");
+		rChooser = new JButton("Browse");
 		GridBagConstraints gbc_rChooser = Utils.getConStraints(3,4,null);
 		add(rChooser, gbc_rChooser);
 		rChooser.addActionListener(new ActionListener() {
@@ -209,7 +209,7 @@ public class AdvancedPanel extends JPanel{
 
 		});
 		
-		export = new JButton("Export");
+		export = new JButton("Export   ");
 		GridBagConstraints gbc_export = Utils.getConStraints(4,5,null);
 		add(export, gbc_export);
 		export.addActionListener(new ActionListener() {
@@ -219,9 +219,11 @@ public class AdvancedPanel extends JPanel{
 						
 						adminService=new AdminService();
 						adminService.exportToExcel(exportExcel.getText().toString());
+						JOptionPane.showMessageDialog(AdvancedPanel.this, "Exported successfully !");
 						
 					} catch (Exception e) {
-						
+						JOptionPane.showMessageDialog(AdvancedPanel.this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
 					} 
 				
 			}

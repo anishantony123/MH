@@ -416,10 +416,12 @@ public class Main extends JFrame {
 	}
 	public void loginAction(){
 		login.setVisible(true);
-		mainPanel.setVisible(false);				
+		mainPanel.setVisible(false);
+		login.clear();
 	}
 	public void logoutAction(){
 		session.inValidateSession();
+		login.clear();
 		loginButton.setIcon(ImageUtil.getIcon(HMConstants.LOGIN_IMG));
 		loginButton.setActionCommand("Login");
 		btnUsers.setEnabled(false);
