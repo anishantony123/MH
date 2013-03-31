@@ -8,6 +8,6 @@
 	<classpathentry kind="lib" path="src/lib/itextpdf-5.3.4.jar"/>
 	<classpathentry kind="lib" path="src/lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="src/lib/imgscalr-lib-4.2.jar"/>
-	<classpathentry kind="lib" path="src/lib/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="poi-3.9-20121203.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
